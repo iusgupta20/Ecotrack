@@ -81,7 +81,7 @@ NODE_ENV=development
 GEMINI_API_KEY=your_gemini_api_key_here
 
 # Optional: To use external MongoDB. If omitted, a local memory database boots.
-# MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/ecotrack
+# MONGODB_URI=mongodb+srv://<redacted-credentials>@cluster.mongodb.net/ecotrack
 ```
 
 ### 3. Install & Start Backend Server

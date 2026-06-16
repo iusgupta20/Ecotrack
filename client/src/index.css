@@ -1,0 +1,507 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Primary Brand: Green (Sustainability) ── */
+  --color-brand-green-50: #ecfdf5;
+  --color-brand-green-100: #d1fae5;
+  --color-brand-green-200: #a7f3d0;
+  --color-brand-green-300: #6ee7b7;
+  --color-brand-green-400: #34d399;
+  --color-brand-green-500: #10b981;
+  --color-brand-green-600: #059669;
+  --color-brand-green-700: #047857;
+  --color-brand-green-800: #065f46;
+  --color-brand-green-900: #064e3b;
+
+  /* ── Accent Brand: Blue (Technology/Trust) ── */
+  --color-brand-blue-50: #eff6ff;
+  --color-brand-blue-100: #dbeafe;
+  --color-brand-blue-200: #bfdbfe;
+  --color-brand-blue-300: #93c5fd;
+  --color-brand-blue-400: #60a5fa;
+  --color-brand-blue-500: #3b82f6;
+  --color-brand-blue-600: #2563eb;
+  --color-brand-blue-700: #1d4ed8;
+  --color-brand-blue-800: #1e40af;
+  --color-brand-blue-900: #1e3a8a;
+
+  /* ── Neutrals: Dark Slate (Professional) ── */
+  --color-brand-dark: #0f172a;
+  --color-brand-slate: #475569;
+  --color-brand-light-bg: #f8fafc;
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Base Theme Variables                                     */
+/* ─────────────────────────────────────────────────────── */
+@layer base {
+  :root {
+    --bg-primary: #f0fdf4;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f8fafc;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-color: #e2e8f0;
+    --border-hover: #10b981;
+    --shadow-color: rgba(16, 185, 129, 0.06);
+    --shadow-hover: rgba(16, 185, 129, 0.12);
+    --accent-gradient: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    --accent-gradient-blue: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+    --hero-gradient: linear-gradient(135deg, #ecfdf5 0%, #eff6ff 50%, #f0fdf4 100%);
+    --card-gradient: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%);
+  }
+
+  .dark {
+    --bg-primary: #020617;
+    --bg-secondary: #0f172a;
+    --bg-tertiary: #1e293b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border-color: #1e293b;
+    --border-hover: #10b981;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(16, 185, 129, 0.15);
+    --accent-gradient: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+    --accent-gradient-blue: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+    --hero-gradient: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
+    --card-gradient: linear-gradient(180deg, #0f172a 0%, #020617 100%);
+  }
+
+  .high-contrast {
+    --bg-primary: #000000;
+    --bg-secondary: #000000;
+    --bg-tertiary: #111111;
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --text-muted: #cccccc;
+    --border-color: #ffffff;
+    --border-hover: #10b981;
+    --shadow-color: transparent;
+    --shadow-hover: transparent;
+    --accent-gradient: linear-gradient(135deg, #10b981 0%, #10b981 100%);
+    --accent-gradient-blue: linear-gradient(135deg, #3b82f6 0%, #3b82f6 100%);
+    --hero-gradient: linear-gradient(135deg, #000000 0%, #000000 100%);
+    --card-gradient: linear-gradient(180deg, #000000 0%, #000000 100%);
+  }
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Global Body Styles                                       */
+/* ─────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Premium Card Component                                   */
+/* ─────────────────────────────────────────────────────── */
+.eco-card {
+  background: var(--card-gradient);
+  border: 1px solid var(--border-color);
+  border-radius: 1.25rem;
+  box-shadow:
+    0 1px 3px 0 var(--shadow-color),
+    0 4px 20px 0 var(--shadow-color);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.25s ease;
+}
+
+.eco-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 4px 12px 0 var(--shadow-hover),
+    0 12px 40px 0 var(--shadow-hover);
+  border-color: var(--border-hover);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Glassmorphism Header                                     */
+/* ─────────────────────────────────────────────────────── */
+.glass-header {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.12);
+}
+
+.dark .glass-header {
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Button Variants                                          */
+/* ─────────────────────────────────────────────────────── */
+.btn-primary {
+  background: var(--accent-gradient);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.5rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--accent-gradient-blue);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  padding: 0.625rem 1.5rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4);
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Input Styling                                            */
+/* ─────────────────────────────────────────────────────── */
+.eco-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+.eco-input:focus {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.eco-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Accessibility                                            */
+/* ─────────────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 3px solid #10b981;
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Custom Scrollbar                                         */
+/* ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.4);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Range Slider Styling                                     */
+/* ─────────────────────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 100px;
+  background: linear-gradient(to right, #10b981 0%, #3b82f6 100%);
+  outline: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+input[type="range"]:hover {
+  opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #10b981;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #10b981;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Animations                                               */
+/* ─────────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(16, 185, 129, 0); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.08), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.animate-pulse-green {
+  animation: pulse-green 2s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Gradient Text                                            */
+/* ─────────────────────────────────────────────────────── */
+.text-gradient-green {
+  background: linear-gradient(135deg, #10b981, #059669);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-mixed {
+  background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Stat / Metric Card Accents                               */
+/* ─────────────────────────────────────────────────────── */
+.metric-icon-green {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  color: #059669;
+}
+
+.dark .metric-icon-green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.1));
+  color: #34d399;
+}
+
+.metric-icon-blue {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  color: #2563eb;
+}
+
+.dark .metric-icon-blue {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.1));
+  color: #60a5fa;
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Badge / Tag Styles                                       */
+/* ─────────────────────────────────────────────────────── */
+.eco-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+.eco-badge-green {
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  color: #065f46;
+}
+
+.dark .eco-badge-green {
+  background: rgba(16, 185, 129, 0.12);
+  color: #6ee7b7;
+}
+
+.eco-badge-blue {
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  color: #1e40af;
+}
+
+.dark .eco-badge-blue {
+  background: rgba(59, 130, 246, 0.12);
+  color: #93c5fd;
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Toggle Switch                                            */
+/* ─────────────────────────────────────────────────────── */
+.eco-toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 100px;
+  padding: 2px;
+  transition: background-color 0.25s ease;
+  cursor: pointer;
+  border: none;
+  position: relative;
+}
+
+.eco-toggle-on {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.eco-toggle-off {
+  background: #cbd5e1;
+}
+
+.dark .eco-toggle-off {
+  background: #334155;
+}
+
+.eco-toggle-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.eco-toggle-on .eco-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Hero Banner Gradient Background                          */
+/* ─────────────────────────────────────────────────────── */
+.hero-banner {
+  background: linear-gradient(135deg,
+    rgba(16, 185, 129, 0.08) 0%,
+    rgba(59, 130, 246, 0.06) 50%,
+    rgba(16, 185, 129, 0.04) 100%
+  );
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.dark .hero-banner {
+  background: linear-gradient(135deg,
+    rgba(16, 185, 129, 0.06) 0%,
+    rgba(59, 130, 246, 0.04) 50%,
+    rgba(16, 185, 129, 0.03) 100%
+  );
+  border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Number Select / Option Cards                             */
+/* ─────────────────────────────────────────────────────── */
+.option-card {
+  border: 1.5px solid var(--border-color);
+  border-radius: 1rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.option-card:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.03);
+}
+
+.option-card-active {
+  border-color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.06) !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* ─────────────────────────────────────────────────────── */
+/* Progress Bar Gradient                                    */
+/* ─────────────────────────────────────────────────────── */
+.progress-bar-eco {
+  background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+  border-radius: 100px;
+  height: 6px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
