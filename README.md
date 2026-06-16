@@ -101,6 +101,20 @@ npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### 5. Run From One Root Folder
+You can now manage the full stack from the single project root:
+```bash
+npm install
+npm run install:all
+npm run dev
+```
+Useful root commands:
+```bash
+npm run build
+npm run test
+npm run lint
+```
+
 ---
 
 ## 🧪 Testing
