@@ -108,8 +108,14 @@ npm install
 npm run install:all
 npm run dev
 ```
+For a fresh setup and instant demo from the root folder:
+```bash
+npm run setup:demo
+```
+The root installer uses `--legacy-peer-deps` for the client to match the current frontend dependency constraints.
 Useful root commands:
 ```bash
+npm run setup:demo
 npm run demo
 npm run build
 npm run start
@@ -118,6 +124,7 @@ npm run test
 npm run lint
 ```
 
+- `npm run setup:demo`: installs root, server, and client dependencies, then launches the demo automatically.
 - `npm run demo`: starts backend and frontend, then opens the app automatically in your browser.
 - `npm run start`: runs the backend in production mode and serves the built frontend from Express.
 - `npm run serve`: builds both apps, then serves the full stack from one command.
