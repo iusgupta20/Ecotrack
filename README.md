@@ -112,7 +112,6 @@ For a fresh setup and instant demo from the root folder:
 ```bash
 npm run setup:demo
 ```
-The root installer uses `--legacy-peer-deps` for the client to match the current frontend dependency constraints.
 Useful root commands:
 ```bash
 npm run setup:demo
