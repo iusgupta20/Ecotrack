@@ -7,7 +7,10 @@ export const setMemoryToken = (token: string | null) => {
 
 export const getMemoryToken = () => memoryToken;
 
-const BASE_URL = '/api';
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim();
+const BASE_URL = configuredApiBaseUrl
+  ? configuredApiBaseUrl.replace(/\/$/, '')
+  : '/api';
 
 const getHeaders = (): HeadersInit => {
   // Guest in-memory token takes priority, then persistent localStorage token
