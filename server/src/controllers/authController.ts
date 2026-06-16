@@ -12,19 +12,40 @@ const getJwtSecret = () => {
   return secret;
 };
 
+const normalizeEmail = (email: string) => email.trim().toLowerCase();
+
+const normalizeName = (name: string) => name.trim();
+
+const isStrongPassword = (password: string) => {
+  return password.length >= 8 && /[A-Za-z]/.test(password) && /\d/.test(password);
+};
+
+const buildUserResponse = (user: { _id: any; name: string; email: string; points: number; streak: number; badges: string[] }) => ({
+  id: user._id,
+  name: user.name,
+  email: user.email,
+  points: user.points,
+  streak: user.streak,
+  badges: user.badges
+});
+
 export const register = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { name, email, password } = req.body;
+    const sanitizedName = typeof name === 'string' ? normalizeName(name) : '';
+    const sanitizedEmail = typeof email === 'string' ? normalizeEmail(email) : '';
 
-    if (!name || !email || !password) {
+    if (!sanitizedName || !sanitizedEmail || !password) {
       return res.status(400).json({ message: 'Please provide all required fields' });
     }
 
-    if (password.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters long' });
+    if (!isStrongPassword(password)) {
+      return res.status(400).json({
+        message: 'Password must be at least 8 characters long and include at least one letter and one number'
+      });
     }
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: sanitizedEmail });
     if (existingUser) {
       return res.status(400).json({ message: 'User with this email already exists' });
     }
@@ -33,8 +54,8 @@ export const register = async (req: AuthenticatedRequest, res: Response) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = new User({
-      name,
-      email,
+      name: sanitizedName,
+      email: sanitizedEmail,
       password: hashedPassword,
       points: 0,
       streak: 0,
@@ -51,16 +72,10 @@ export const register = async (req: AuthenticatedRequest, res: Response) => {
 
     res.status(201).json({
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        points: user.points,
-        streak: user.streak,
-        badges: user.badges
-      }
+      user: buildUserResponse(user)
     });
   } catch (error: any) {
+    console.error('Server error during registration:', error);
     res.status(500).json({ message: 'Server error during registration', error: error?.message });
   }
 };
@@ -68,12 +83,13 @@ export const register = async (req: AuthenticatedRequest, res: Response) => {
 export const login = async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { email, password } = req.body;
+    const sanitizedEmail = typeof email === 'string' ? normalizeEmail(email) : '';
 
-    if (!email || !password) {
+    if (!sanitizedEmail || !password) {
       return res.status(400).json({ message: 'Please provide email and password' });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email: sanitizedEmail });
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
@@ -108,16 +124,10 @@ export const login = async (req: AuthenticatedRequest, res: Response) => {
 
     res.status(200).json({
       token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        points: user.points,
-        streak: user.streak,
-        badges: user.badges
-      }
+      user: buildUserResponse(user)
     });
   } catch (error: any) {
+    console.error('Server error during login:', error);
     res.status(500).json({ message: 'Server error during login', error: error?.message });
   }
 };

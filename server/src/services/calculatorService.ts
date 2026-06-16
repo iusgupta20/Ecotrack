@@ -84,10 +84,11 @@ export const calculateCarbonFootprint = (inputs: CalculatorInputs) => {
   const treeEquivalent = Math.round(totalCo2 / 1.83);
 
   // Score 0 to 100: Higher is better (less carbon)
-  // Benchmark monthly footprint: 750 kg CO2 = score 50.
-  // 1500 kg CO2 = score 0.
-  // 0 kg CO2 = score 100.
-  const score = Math.max(0, Math.min(100, Math.round(100 - (totalCo2 / 15))));
+  // The scale is intentionally curved so normal monthly footprints still
+  // land in the high range while extreme emissions are penalized harder.
+  // 0 kg CO2 = score 100, ~750 kg CO2 = score ~75, 1500+ kg CO2 = score 0.
+  const normalized = totalCo2 / 1500;
+  const score = Math.max(0, Math.min(100, Math.round(100 * (1 - Math.pow(normalized, 2)))));
 
   return {
     transport: {

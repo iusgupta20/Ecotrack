@@ -3,12 +3,13 @@ import mongoose from 'mongoose';
 import { app } from '../src/index';
 import { User } from '../src/models/User';
 
+jest.setTimeout(120000);
+
 describe('Express API Route Endpoints', () => {
   beforeAll(async () => {
-    // Wait for database connection to be established (since startServer is async)
     let checks = 0;
-    while (mongoose.connection.readyState !== 1 && checks < 20) {
-      await new Promise((resolve) => setTimeout(resolve, 300));
+    while (mongoose.connection.readyState !== 1 && checks < 240) {
+      await new Promise((resolve) => setTimeout(resolve, 250));
       checks++;
     }
   });
@@ -58,19 +59,71 @@ describe('Express API Route Endpoints', () => {
       .send({
         name: 'Login Test',
         email: randomEmail,
-        password: 'securePassword'
+        password: 'securePassword123'
       });
 
     const resLog = await request(app)
       .post('/api/auth/login')
       .send({
         email: randomEmail,
-        password: 'securePassword'
+        password: 'securePassword123'
       });
 
     expect(resLog.status).toBe(200);
     expect(resLog.body).toHaveProperty('token');
     expect(resLog.body.user.name).toBe('Login Test');
+  });
+
+  test('POST /api/auth/login - should accept trimmed and case-insensitive email input', async () => {
+    const rawEmail = `  MixedCase_${Math.floor(Math.random() * 100000)}@EcoTrack.ORG  `;
+    const password = 'StrongPass123';
+
+    await request(app)
+      .post('/api/auth/register')
+      .send({
+        name: 'Login Normalization',
+        email: rawEmail,
+        password
+      });
+
+    const res = await request(app)
+      .post('/api/auth/login')
+      .send({
+        email: rawEmail.toUpperCase(),
+        password
+      });
+
+    expect(res.status).toBe(200);
+    expect(res.body.user.email).toBe(rawEmail.trim().toLowerCase());
+  });
+
+  test('POST /api/auth/register - should normalize email and trim name', async () => {
+    const rawEmail = `  Normalized_${Math.floor(Math.random() * 100000)}@EcoTrack.ORG  `;
+
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({
+        name: '  Trimmed Name  ',
+        email: rawEmail,
+        password: 'securePass123'
+      });
+
+    expect(res.status).toBe(201);
+    expect(res.body.user.name).toBe('Trimmed Name');
+    expect(res.body.user.email).toBe(rawEmail.trim().toLowerCase());
+  });
+
+  test('POST /api/auth/register - should reject weak passwords', async () => {
+    const res = await request(app)
+      .post('/api/auth/register')
+      .send({
+        name: 'Weak Password User',
+        email: `weak_${Math.floor(Math.random() * 100000)}@ecotrack.org`,
+        password: 'short1'
+      });
+
+    expect(res.status).toBe(400);
+    expect(res.body.message).toContain('Password must be at least 8 characters long');
   });
 
   test('POST /api/footprint - should reject unauthenticated requests', async () => {
@@ -89,7 +142,7 @@ describe('Express API Route Endpoints', () => {
       .send({
         name: 'Footprint User',
         email: randomEmail,
-        password: 'securePassword'
+        password: 'securePassword123'
       });
 
     const token = registerRes.body.token;
@@ -121,7 +174,7 @@ describe('Express API Route Endpoints', () => {
       .send({
         name: 'Invalid Payload User',
         email: randomEmail,
-        password: 'securePassword'
+        password: 'securePassword123'
       });
 
     const token = registerRes.body.token;

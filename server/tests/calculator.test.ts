@@ -21,7 +21,7 @@ describe('Carbon Footprint Calculator Service', () => {
     // Water: 150 * 30 * 0.0005 = 2.25 kg CO2
     // Expected Total: 108 + 12 + 90 + 48 + 150 + 20 + 2.25 = 430.25 kg CO2
     expect(results.totalCo2).toBeCloseTo(430.3, 1);
-    expect(results.score).toBe(71); // 100 - Math.round(430.3 / 15) = 100 - 29 = 71
+    expect(results.score).toBe(92); // Curved score keeps typical profiles in the high range
     expect(results.treeEquivalent).toBe(Math.round(430.25 / 1.83)); // 235
   });
 
@@ -43,7 +43,7 @@ describe('Carbon Footprint Calculator Service', () => {
     // Water = 100 * 30 * 0.0005 = 1.5 kg CO2
     // Expected Total: 60 + 5 + 1.5 = 66.5 kg CO2
     expect(results.totalCo2).toBeCloseTo(66.5, 1);
-    expect(results.score).toBe(96); // 100 - Math.round(66.5 / 15) = 100 - 4 = 96
+    expect(results.score).toBe(100); // Very low emissions should now round up to a perfect score
   });
 
   test('should clamp score to 0 when emissions are excessively high', () => {

@@ -10,6 +10,8 @@ import apiRouter from './routes/api';
 
 dotenv.config();
 
+mongoose.set('bufferTimeoutMS', 120000);
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 let mongoServer: MongoMemoryServer | null = null;
