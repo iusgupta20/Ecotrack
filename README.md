@@ -110,10 +110,17 @@ npm run dev
 ```
 Useful root commands:
 ```bash
+npm run demo
 npm run build
+npm run start
+npm run serve
 npm run test
 npm run lint
 ```
+
+- `npm run demo`: starts backend and frontend, then opens the app automatically in your browser.
+- `npm run start`: runs the backend in production mode and serves the built frontend from Express.
+- `npm run serve`: builds both apps, then serves the full stack from one command.
 
 ---
 

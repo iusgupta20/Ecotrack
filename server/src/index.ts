@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import path from 'path';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import apiRouter from './routes/api';
 
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 5000;
 let mongoServer: MongoMemoryServer | null = null;
 const isProduction = process.env.NODE_ENV === 'production';
 const clientOrigin = process.env.CLIENT_ORIGIN;
+const clientDistPath = path.resolve(__dirname, '../../client/dist');
 
 app.disable('x-powered-by');
 
@@ -52,6 +54,14 @@ app.use('/api', apiRouter);
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', timestamp: new Date() });
 });
+
+if (isProduction) {
+  app.use(express.static(clientDistPath));
+
+  app.get(/^(?!\/api|\/health).*/, (req, res) => {
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+}
 
 // Database connection & Server Startup
 const startServer = async () => {
